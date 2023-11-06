@@ -13,6 +13,7 @@ import os
 import streamlit as st
 
 
+
 # Load environment vars
 load_dotenv()
 
@@ -20,6 +21,8 @@ load_dotenv()
 api_key = os.getenv("API_KEY", None)
 ibm_cloud_url = os.getenv("IBM_CLOUD_URL", None)
 project_id = os.getenv("PROJECT_ID", None)
+
+print(api_key)
 if api_key is None or ibm_cloud_url is None or project_id is None:
     print("Ensure you copied the .env file that you created earlier into the same directory as this notebook")
 else:

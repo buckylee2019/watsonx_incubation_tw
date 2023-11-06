@@ -219,5 +219,3 @@ Step 5: REWRITE INTO SIMPLE CHINESE ANSWER:
 [/INST]
     '''
     return prompt
-IBM - Office of the CIO
-IBM - Office of the CIO
