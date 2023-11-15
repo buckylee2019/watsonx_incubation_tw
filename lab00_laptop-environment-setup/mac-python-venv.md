@@ -1,55 +1,55 @@
-# 创建虚拟Python环境
-Python 应用程序导入多个库，通常，所需库的不同版本之间可能会发生冲突。 但是，您的应用程序可能需要特定的库版本进行bug调试。 创建一个虚拟环境，即针对特定 Python 安装的一套独立的库是一个针对调试代码很好的解决方案。
+# 創建虛擬Python環境
+Python 應用程式會匯入多個函式庫，通常，所需函式庫的不同版本之間可能會發生衝突。但是，您的應用程式可能需要特定的庫版本進行bug調試。建立一個虛擬環境，即針對特定 Python 安裝的一套獨立的函式庫是一個針對偵錯程式碼很好的解決方案。
 
-我们将使用 Python 的内置虚拟环境功能，该功能在 Python 3.3 版本中引入，并提供 [名为 venv 的内置环境模块](https://docs.python.org/3/tutorial/venv.html). 您可能会问为什么我们不使用 Conda。 原因是因为[Conda/Miniconda 现在位于 IBM 的“请勿使用”列表中](https://w3.ibm.com/w3publisher/ossc-process/exception-and-do-not-use) 
+我們將使用Python 的內建虛擬環境功能，該功能在Python 3.3 版本中引入，並提供[名為venv 的內建環境模組](https://docs.python.org/3/tutorial/venv.html).您可能會問為什麼我們不使用Conda。原因是因為[Conda/Miniconda 現在位於 IBM 的「請勿使用」清單中](https://w3.ibm.com/w3publisher/ossc-process/exception-and-do-not-use)
 
-在下面创建虚拟 Python 环境时，您还将安装完成本训练营所需的所有库，包括 Jupyter Notebooks、Watson Machine Learning Python SDK、Hugging Face 库、ChromaDB 和 LangChain。
+在下方建立虛擬 Python 環境時，您也會安裝完成本訓練營所需的所有函式庫，包括 Jupyter Notebooks、Watson Machine Learning Python SDK、Hugging Face 函式庫、ChromaDB 和 LangChain。
 
-#### 升级到 Python v3.11 以避免任何冲突
-升级 Python 版本可能很复杂，因此在此过程中不要害怕寻求帮助。 我们已记录了最佳实践来为您提供帮助。 使用 Python 3.8 plus 可能没有任何问题，但请记住，即使 Python 3.9 也已经有 2.5 岁了。  [请遵循以下最佳实践升级到 Python 3.11](upgrade-python.md).
+#### 升級到 Python v3.11 以避免任何衝突
+升級 Python 版本可能很複雜，因此在過程中不要害怕尋求協助。我們已記錄了最佳實踐來為您提供幫助。使用 Python 3.8 plus 可能沒有任何問題，但請記住，即使 Python 3.9 也已經有 2.5 歲了。 [請遵循以下最佳實務升級到 Python 3.11](upgrade-python.md).
 
-#### 创建你的Python虚拟环境
-创建一个文件夹，您将在其中创建和存储 Python 虚拟环境。 然后打开终端/控制台窗口并输入以下命令来创建名为`venv`的 Python 环境。 新的虚拟环境将产生一个同名的本地目录。
+#### 創建你的Python虛擬環境
+建立一個資料夾，您將在其中建立和儲存 Python 虛擬環境。然後打開終端機/控制台視窗並輸入以下命令來建立名為`venv`的 Python 環境。新的虛擬環境將產生一個同名的本機目錄。
 
 ```
-cd <directory to store your Python environment>
+cd <儲存Python環境的目錄>
 python -m venv .venv
 ```
 
-#### 下载 requirements_venv.txt
-下载 [requirements_venv.txt](./requirements_venv.txt) 其中包含要在您的环境中安装的初始软件包的列表。 在运行命令之前，将requirements.txt 文件移至您为Python 环境创建的文件夹。 请注意，需求文件应该已经从之前克隆的存储库中下载！
+#### 下載 requirements_venv.txt
+下載 [requirements_venv.txt](./requirements_venv.txt) 其中包含要在您的環境中安裝的初始軟體包的清單。在執行命令之前，將requirements.txt 檔案移至您為Python 環境建立的資料夾。請注意，需求檔案應該已經從先前克隆的儲存庫中下載！
 
-#### 激活您的Python虚拟环境
-执行以下命令:
+#### 啟動您的Python虛擬環境
+執行以下命令:
 ```
-source .venv/bin/activate
-python -m pip install -r requirements_venv.txt
+源 .venv/bin/activate
+python -m pip install -rrequirements_venv.txt
 ```
 
-您可以通过查看终端/控制台窗口中提示行的开头来验证您的环境是否处于活动状态。 如下所示，提示符的开头更改为 show (venv)。
+您可以透過查看終端機/控制台視窗中提示行的開頭來驗證您的環境是否處於活動狀態。如下所示，提示符的開頭會變更為 show (venv)。
 
-<p align="left">
-  <img src="images/environment-activated-python.png" width="500"/>
+<p對齊=“左”>
+<img src="images/environment-activated-python.png" width="500"/>
 </p>
 
-注意：如果您是 Windows 用户，请按照[Setting-up-Python-Virtual-Environment-in-Windows.docx](./Setting-up-Python-Virtual-Environment-in-Windows.docx) 执行。
+注意：如果您是 Windows 用戶，請依照[Setting-up-Python-Virtual-Environment-in-Windows.docx](./Setting-up-Python-Virtual-Environment-in-Windows.docx) 執行。
 
-注意：如果您没有 M1 芯片，您可能会收到如下错误：
+注意：如果您沒有 M1 晶片，您可能會收到以下錯誤：
 ```
-× Building wheel for chroma-hnswlib (pyproject.toml) did not run successfully.
+× chroma-hnswlib 的建置輪 (pyproject.toml) 未成功運作。
 ```
-如果是这样，请尝试这两种解决方案之一，更换 `python -m pip install -r requirements_venv.txt` 为
+如果是這樣，請嘗試這兩個解決方案之一，更換 `python -m pip install -r requirements_venv.txt` 為
 ```
-export HNSWLIB_NO_NATIVE=1
-python -m pip install -r requirements_venv.txt
+匯出 HNSWLIB_NO_NATIVE=1
+python -m pip install -rrequirements_venv.txt
 ```
 或者
 ```
-ARCHFLAGS="-arch x86_64" python -m pip install -r requirements_venv.txt
+ARCHFLAGS="-arch x86_64" python -m pip install -rrequirements_venv.txt
 ```
 
-#### 停用您的 Python 虚拟环境
-如果您需要更改到不同的环境，可以使用以下命令停用当前环境：
+#### 停用您的 Python 虛擬環境
+如果您需要變更到不同的環境，可以使用以下命令停用目前環境：
 ```
-deactivate
+停用
 ```
