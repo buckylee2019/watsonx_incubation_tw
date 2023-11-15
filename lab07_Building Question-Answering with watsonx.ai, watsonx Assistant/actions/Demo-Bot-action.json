@@ -1,0 +1,1095 @@
+{
+  "name": "Demo Bot-action",
+  "type": "action",
+  "valid": true,
+  "status": "Available",
+  "created": "2023-11-15T04:20:25.501Z",
+  "updated": "2023-11-15T05:33:30.562Z",
+  "language": "zh-tw",
+  "skill_id": "1b8aed38-a722-44e2-acb3-e54c9d0ebad9",
+  "workspace": {
+    "actions": [
+      {
+        "steps": [
+          {
+            "step": "step_996",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "好的, 我會幫你連接生成式AI 模型, 歡迎提問～"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_996",
+            "next_step": "step_380"
+          },
+          {
+            "step": "step_380",
+            "title": "使用者輸入",
+            "output": {
+              "generic": []
+            },
+            "handlers": [],
+            "question": {
+              "free_text": true
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_380",
+            "next_step": "step_378"
+          },
+          {
+            "step": "step_378",
+            "title": "儲存使用者輸入",
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "scalar": "[INST]<<SYS>>\\nYou're a helpful assistant, always answer question in fun way. You should answer the following question in Traditional Chinese. For example: Answer the question: 美國總統是誰？ Answer: 喬拜登。<</SYS>>Answer the question:"
+                  },
+                  "skill_variable": "prompt_prefix"
+                },
+                {
+                  "value": {
+                    "expression": "${prompt_prefix}.concat( ${step_380}).concat(\" Answer:  [/INST]\\n\")"
+                  },
+                  "skill_variable": "model_input"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_378",
+            "next_step": "step_858"
+          },
+          {
+            "step": "step_858",
+            "output": {
+              "generic": []
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/ml/v1-beta/generation/text",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "spec_hash_id": "cc50493e455de183d661b95360196ddb468a02051add6dcaf4a6479b34900be5",
+                  "catalog_item_id": "0f128d9f-327d-4ee6-9944-c6148f8f1e49"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "model_input"
+                      },
+                      "parameter": "input"
+                    },
+                    {
+                      "value": {
+                        "scalar": "meta-llama/llama-2-70b-chat"
+                      },
+                      "parameter": "model_id"
+                    },
+                    {
+                      "value": {
+                        "skill_variable": "watsonx_project_id"
+                      },
+                      "parameter": "project_id"
+                    },
+                    {
+                      "value": {
+                        "scalar": 0
+                      },
+                      "parameter": "parameters.temperature"
+                    },
+                    {
+                      "value": {
+                        "scalar": 250
+                      },
+                      "parameter": "parameters.max_new_tokens"
+                    },
+                    {
+                      "value": {
+                        "scalar": 20
+                      },
+                      "parameter": "parameters.min_new_tokens"
+                    }
+                  ],
+                  "query": [
+                    {
+                      "value": {
+                        "skill_variable": "watsonx_api_version"
+                      },
+                      "parameter": "version"
+                    }
+                  ]
+                },
+                "result_variable": "step_858_result_1"
+              }
+            },
+            "variable": "step_858",
+            "next_step": "step_756"
+          },
+          {
+            "step": "step_756",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": ""
+                          },
+                          {
+                            "skill_variable": "model_response"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "expression": "${step_858_result_1.body.results}.get(0).generated_text"
+                  },
+                  "skill_variable": "model_response"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "replay",
+              "clear": [
+                {
+                  "variable": "step_380"
+                },
+                {
+                  "variable": "step_378"
+                },
+                {
+                  "variable": "step_858"
+                }
+              ]
+            },
+            "variable": "step_756"
+          }
+        ],
+        "title": "生成式AI測試",
+        "action": "action_20072",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_20072_intent_1281"
+        },
+        "variables": [
+          {
+            "title": "No response",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_378",
+            "data_type": "any"
+          },
+          {
+            "title": "使用者輸入",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_380",
+            "data_type": "any"
+          },
+          {
+            "title": "{variable}",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_756",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_858",
+            "data_type": "any"
+          },
+          {
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_858_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "好的, 我會幫你連接生成式AI 模型, 歡迎提問～",
+            "privacy": {
+              "enabled": false
+            },
+            "variable": "step_996",
+            "data_type": "any"
+          }
+        ],
+        "launch_mode": "learning",
+        "next_action": "fallback",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "我想我不明白。請重新描述您的問題。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001",
+            "condition": {
+              "lte": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action_and_end",
+              "invoke_action": {
+                "action": "fallback",
+                "policy": "default",
+                "parameters": null,
+                "result_variable": "step_002_result_1"
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "gt": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            }
+          }
+        ],
+        "title": "No action matches",
+        "action": "anything_else",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "anything_else"
+        },
+        "variables": [
+          {
+            "title": "恐怕我不明白您在問什麼，請重新表述您的問題。",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002_result_1",
+            "data_type": "any"
+          }
+        ],
+        "disambiguation_opt_out": true
+      },
+      {
+        "steps": [
+          {
+            "step": "digression_failure",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "抱歉，我無法確認您是否要回到前一個主題，請讓我連接至代理程式."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我將您傳送給有空的客服人員。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服人員全忙。只要客服人員有空，我們就會聯絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "digression_failure",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Failed to confirm topic return"
+                }
+              ]
+            },
+            "next_step": "step_001"
+          },
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "我想我不明白。我可以將您連到客服人員。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我將您傳送給有空的客服人員。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服人員全忙。只要客服人員有空，我們就會聯絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_001",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Step validation failed"
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "很抱歉我幫不到忙。我可以立即將您連到客服人員。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我將您傳送給有空的客服人員。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服人員全忙。只要客服人員有空，我們就會聯絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Agent requested"
+                }
+              ]
+            },
+            "next_step": "step_003"
+          },
+          {
+            "step": "step_003",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "我不明白您要問的是什麼，讓我將您連到客服人員。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我將您傳送給有空的客服人員。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服人員全忙。只要客服人員有空，我們就會聯絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_003",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "No action matches"
+                }
+              ]
+            },
+            "next_step": "step_004"
+          },
+          {
+            "step": "step_004",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "看來這次對話最好由人工客服處理。 讓我把您連到我們的一個客服。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我們把您連到有空的客服。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服都忙。 客服有空時，我們會連絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_004",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Danger word detected"
+                }
+              ]
+            },
+            "next_step": "step_005"
+          },
+          {
+            "step": "step_005",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "看來這次對話最好由人工客服處理。 讓我把您連到我們的一個客服。"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "讓我們把您連到有空的客服。"
+                },
+                "agent_unavailable": {
+                  "message": "目前客服都忙。 客服有空時，我們會連絡您。"
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_005",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Profanity detected"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Fallback",
+        "action": "fallback",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "fallback_connect_to_agent"
+        },
+        "variables": [
+          {
+            "title": "主題傳回失敗",
+            "variable": "digression_failure",
+            "data_type": "any"
+          },
+          {
+            "title": "我想我不明白。我可以將您連到客服人員。",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "title": "很抱歉我幫不到忙。我可以立即將您連到客服人員。",
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "title": "我不明白您要問的是什麼，讓我將您連到客服人員。",
+            "variable": "step_003",
+            "data_type": "any"
+          },
+          {
+            "title": "看來這次談話最好",
+            "variable": "step_004",
+            "data_type": "any"
+          },
+          {
+            "title": "褻瀆 - 似乎此對話",
+            "variable": "step_005",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "run_always",
+        "disambiguation_opt_out": true
+      },
+      {
+        "steps": [
+          {
+            "step": "danger_word_detected",
+            "title": "Connect to agent",
+            "handlers": [],
+            "resolver": {
+              "type": "fallback"
+            },
+            "variable": "danger_word_detected_variable",
+            "condition": {
+              "entity": "danger_words"
+            },
+            "next_step": "profanity_detected"
+          },
+          {
+            "step": "profanity_detected",
+            "title": "Show warning",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "請在與助理互動時使用適當的語言。"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "max_hits",
+                "handler": "max_hits_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "max_hits": 2,
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "profanity_detected_variable",
+            "condition": {
+              "entity": "profane_words"
+            }
+          }
+        ],
+        "title": "Trigger word detected",
+        "action": "run_always",
+        "boosts": [],
+        "handlers": [],
+        "variables": [
+          {
+            "title": "Profanity detected",
+            "variable": "danger_word_detected_variable",
+            "data_type": "any"
+          },
+          {
+            "title": "Profane word detected",
+            "variable": "profanity_detected_variable",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "anything_else"
+      },
+      {
+        "steps": [
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "歡迎使用，我能為您做些什麼嗎？"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001"
+          }
+        ],
+        "title": "Greet customer",
+        "action": "welcome",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "welcome"
+        },
+        "variables": [
+          {
+            "variable": "step_001",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_20072",
+        "disambiguation_opt_out": true
+      }
+    ],
+    "intents": [
+      {
+        "intent": "action_20072_intent_1281",
+        "examples": [
+          {
+            "text": "生成式AI測試"
+          }
+        ]
+      },
+      {
+        "intent": "fallback_connect_to_agent",
+        "examples": [
+          {
+            "text": "呼叫客服"
+          },
+          {
+            "text": "客服說明"
+          },
+          {
+            "text": "我可以連線客服嗎？"
+          },
+          {
+            "text": "我想要和人工客服溝通"
+          }
+        ],
+        "description": "請將我轉接至客服"
+      }
+    ],
+    "entities": [
+      {
+        "entity": "danger_words",
+        "values": []
+      },
+      {
+        "entity": "profane_words",
+        "values": []
+      },
+      {
+        "entity": "sys-yes-no",
+        "values": []
+      }
+    ],
+    "metadata": {
+      "api_version": {
+        "major_version": "v2",
+        "minor_version": "2018-11-08"
+      }
+    },
+    "variables": [
+      {
+        "title": "model_id",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_id",
+        "data_type": "string",
+        "description": ""
+      },
+      {
+        "title": "model_input",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_input",
+        "data_type": "string",
+        "description": ""
+      },
+      {
+        "title": "model_parameters_max_new_tokens",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_parameters_max_new_tokens",
+        "data_type": "number",
+        "description": "",
+        "initial_value": {
+          "scalar": 300
+        }
+      },
+      {
+        "title": "model_parameters_min_new_tokens",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_parameters_min_new_tokens",
+        "data_type": "number",
+        "description": "",
+        "initial_value": {
+          "scalar": 20
+        }
+      },
+      {
+        "title": "model_parameters_repetition_penalty",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_parameters_repetition_penalty",
+        "data_type": "number",
+        "description": "",
+        "initial_value": {
+          "scalar": 1.1
+        }
+      },
+      {
+        "title": "model_parameters_stop_sequences",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_parameters_stop_sequences",
+        "data_type": "any",
+        "description": "",
+        "initial_value": {
+          "scalar": "[\"\\n\\n\"]"
+        }
+      },
+      {
+        "title": "model_parameters_temperature",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_parameters_temperature",
+        "data_type": "number",
+        "description": "temperature",
+        "initial_value": {
+          "scalar": 0
+        }
+      },
+      {
+        "title": "model_response",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "model_response",
+        "data_type": "string",
+        "description": ""
+      },
+      {
+        "title": "prompt_prefix",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "prompt_prefix",
+        "data_type": "string",
+        "description": "",
+        "initial_value": {
+          "scalar": "[INST]<<SYS>>\\nYou're a helpful assistant, always answer question in fun way. You should always try to answer the question.\\n<</SYS>>"
+        }
+      },
+      {
+        "title": "watsonx_api_version",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "watsonx_api_version",
+        "data_type": "any",
+        "description": "",
+        "initial_value": {
+          "scalar": "2023-05-29"
+        }
+      },
+      {
+        "title": "watsonx_project_id",
+        "privacy": {
+          "enabled": false
+        },
+        "variable": "watsonx_project_id",
+        "data_type": "any",
+        "description": "",
+        "initial_value": {
+          "scalar": "3543304f-de31-4458-8f2a-a31ceac23f79"
+        }
+      }
+    ],
+    "data_types": [],
+    "collections": [],
+    "counterexamples": [],
+    "system_settings": {
+      "nlp": {
+        "model": "beta"
+      },
+      "variable": {
+        "format": {
+          "time": {
+            "pattern": "short"
+          },
+          "currency": {
+            "fraction_digits": 2
+          }
+        }
+      },
+      "auto_learn": {
+        "apply": true
+      },
+      "launch_mode": {
+        "default": "learning",
+        "enabled": false,
+        "learning": {
+          "step_retry_threshold": 2,
+          "use_connect_to_support": "more_often",
+          "single_answer_clarification": "more_often",
+          "disambiguation_clarification": "more_often"
+        },
+        "confident": {
+          "step_retry_threshold": 4,
+          "use_connect_to_support": "sometimes",
+          "single_answer_clarification": "sometimes",
+          "disambiguation_clarification": "sometimes"
+        }
+      },
+      "topic_switch": {
+        "enabled": true,
+        "messages": {
+          "enable_confirmation": true,
+          "confirmation_failure": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "對不起，我沒聽清楚，請確認。"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              }
+            ]
+          },
+          "confirmation_request": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "您要繼續前一個主題嗎: "
+                        },
+                        {
+                          "system_variable": "digressed_from"
+                        },
+                        {
+                          "scalar": "?"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              },
+              {
+                "options": [
+                  {
+                    "label": "是",
+                    "value": {
+                      "input": {
+                        "text": "是"
+                      }
+                    }
+                  },
+                  {
+                    "label": "不",
+                    "value": {
+                      "input": {
+                        "text": "不"
+                      }
+                    }
+                  }
+                ],
+                "response_type": "option",
+                "repeat_on_reprompt": true
+              }
+            ]
+          }
+        },
+        "max_tries": 3
+      },
+      "generative_ai": {
+        "slot_filling": {
+          "enabled": false
+        }
+      },
+      "disambiguation": {
+        "prompt": "您的意思是:",
+        "enabled": true,
+        "randomize": true,
+        "max_suggestions": 5,
+        "suggestion_text_policy": "title",
+        "none_of_the_above_prompt": "以上皆非",
+        "use_connect_to_support_prompt": "連接至支援中心",
+        "single_answer_clarification_prompt": "其他事項"
+      }
+    },
+    "learning_opt_out": false
+  },
+  "description": "created for assistant 898c4183-dbfe-41f8-a56a-69ab2893bb59",
+  "assistant_id": "898c4183-dbfe-41f8-a56a-69ab2893bb59",
+  "workspace_id": "1b8aed38-a722-44e2-acb3-e54c9d0ebad9",
+  "dialog_settings": {},
+  "next_snapshot_version": "1"
+}
