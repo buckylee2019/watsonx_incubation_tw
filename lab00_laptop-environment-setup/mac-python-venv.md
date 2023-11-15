@@ -12,44 +12,44 @@ Python 應用程式會匯入多個函式庫，通常，所需函式庫的不同�
 建立一個資料夾，您將在其中建立和儲存 Python 虛擬環境。然後打開終端機/控制台視窗並輸入以下命令來建立名為`venv`的 Python 環境。新的虛擬環境將產生一個同名的本機目錄。
 
 ```
-cd <儲存Python環境的目錄>
+cd <directory to store your Python environment>
 python -m venv .venv
 ```
 
 #### 下載 requirements_venv.txt
-下載 [requirements_venv.txt](./requirements_venv.txt) 其中包含要在您的環境中安裝的初始軟體包的清單。在執行命令之前，將requirements.txt 檔案移至您為Python 環境建立的資料夾。請注意，需求檔案應該已經從先前克隆的儲存庫中下載！
+下載 [requirements_venv.txt](./requirements_venv.txt) 其中包含要在您的環境中安裝的初始軟體包的清單。在執行命令之前，將requirements.txt 檔案移至您為Python 環境建立的資料夾。請注意，需求檔案應該已經從先前clone的儲存庫中下載！
 
 #### 啟動您的Python虛擬環境
 執行以下命令:
 ```
-源 .venv/bin/activate
-python -m pip install -rrequirements_venv.txt
+source .venv/bin/activate
+python -m pip install -r requirements_venv.txt
 ```
 
 您可以透過查看終端機/控制台視窗中提示行的開頭來驗證您的環境是否處於活動狀態。如下所示，提示符的開頭會變更為 show (venv)。
 
-<p對齊=“左”>
-<img src="images/environment-activated-python.png" width="500"/>
+<p align="left">
+  <img src="images/environment-activated-python.png" width="500"/>
 </p>
 
 注意：如果您是 Windows 用戶，請依照[Setting-up-Python-Virtual-Environment-in-Windows.docx](./Setting-up-Python-Virtual-Environment-in-Windows.docx) 執行。
 
 注意：如果您沒有 M1 晶片，您可能會收到以下錯誤：
 ```
-× chroma-hnswlib 的建置輪 (pyproject.toml) 未成功運作。
+× Building wheel for chroma-hnswlib (pyproject.toml) did not run successfully.
 ```
 如果是這樣，請嘗試這兩個解決方案之一，更換 `python -m pip install -r requirements_venv.txt` 為
 ```
-匯出 HNSWLIB_NO_NATIVE=1
-python -m pip install -rrequirements_venv.txt
+export HNSWLIB_NO_NATIVE=1
+python -m pip install -r requirements_venv.txt
 ```
 或者
 ```
-ARCHFLAGS="-arch x86_64" python -m pip install -rrequirements_venv.txt
+ARCHFLAGS="-arch x86_64" python -m pip install -r requirements_venv.txt
 ```
 
 #### 停用您的 Python 虛擬環境
 如果您需要變更到不同的環境，可以使用以下命令停用目前環境：
 ```
-停用
+deactivate
 ```
