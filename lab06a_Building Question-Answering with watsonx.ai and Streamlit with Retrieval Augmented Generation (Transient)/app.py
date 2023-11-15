@@ -61,8 +61,8 @@ with st.sidebar:
  
     ''')
     st.write('Powered by [IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai)')
-    image = Image.open('watsonxai.jpg')
-    st.image(image, caption='Powered by watsonx.ai')
+    # image = Image.open('/Users/buckylee/Documents/github/Incubation_watsonx_Chinese/lab06a_Building Question-Answering with watsonx.ai and Streamlit with Retrieval Augmented Generation (Transient)/watsonxai.jpg')
+    # st.image(image, caption='Powered by watsonx.ai')
     max_new_tokens= st.number_input('max_new_tokens',1,1024,value=300)
     min_new_tokens= st.number_input('min_new_tokens',0,value=15)
     repetition_penalty = st.number_input('repetition_penalty',1,2,value=2)
@@ -91,7 +91,7 @@ def read_pdf(uploaded_files,chunk_size =250,chunk_overlap=20):
 
 @st.cache_data
 def read_push_embeddings():
-    embeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     if os.path.exists("db.pickle"):
         with open("db.pickle",'rb') as file_name:
             db = pickle.load(file_name)

@@ -2,3 +2,5 @@
 .DS_Store
 *.DS_Store
 
+lab06a_Building Question-Answering with watsonx.ai and Streamlit with Retrieval Augmented Generation (Transient)/__pycache__/langChainInterface.cpython-311.pyc
+db.pickle
