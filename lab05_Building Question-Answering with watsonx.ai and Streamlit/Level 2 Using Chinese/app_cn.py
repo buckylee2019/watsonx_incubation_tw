@@ -17,10 +17,10 @@ import re
 #language_processor
 from language_process import *
 
-# 房屋贷款期限是多长？
-# 债务有什么好处？
-# 世界银行在哪里？
-# 适当的储蓄比例是多少？
+# 房屋貸款期間多長？
+# 債務有什麼好處？
+# 世界銀行在哪裡？
+# 適當的儲蓄比例是多少？
 
 # Load environment vars
 load_dotenv()
@@ -99,12 +99,12 @@ if prompt:
     st.write(response_from_model)
 
 
-# flanul
-# 房屋贷款期限是多长？
-# 债务有什么好处？
-# 世界银行在哪里？
-# 适当的储蓄比例是多少？
+## flanul
+# 房屋貸款期間多長？
+# 債務有什麼好處？
+# 世界銀行在哪裡？
+# 適當的儲蓄比例是多少？
 
 ## llama70b-chat
-# 什么是投资？
-# 保险类型
+# 什麼是投資？
+# 保險類型
