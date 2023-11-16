@@ -13,7 +13,7 @@ Python 應用程式會匯入多個函式庫，通常，所需函式庫的不同�
 
 ```
 cd <directory to store your Python environment>
-python -m venv .venv
+python3 -m venv .venv
 ```
 
 #### 下載 requirements_venv.txt
@@ -23,7 +23,7 @@ python -m venv .venv
 執行以下命令:
 ```
 source .venv/bin/activate
-python -m pip install -r requirements_venv.txt
+python3 -m pip install -r requirements_venv.txt
 ```
 
 您可以透過查看終端機/控制台視窗中提示行的開頭來驗證您的環境是否處於活動狀態。如下所示，提示符的開頭會變更為 show (venv)。
@@ -38,14 +38,14 @@ python -m pip install -r requirements_venv.txt
 ```
 × Building wheel for chroma-hnswlib (pyproject.toml) did not run successfully.
 ```
-如果是這樣，請嘗試這兩個解決方案之一，更換 `python -m pip install -r requirements_venv.txt` 為
+如果是這樣，請嘗試這兩個解決方案之一，更換 `python3 -m pip install -r requirements_venv.txt` 為
 ```
 export HNSWLIB_NO_NATIVE=1
 python -m pip install -r requirements_venv.txt
 ```
 或者
 ```
-ARCHFLAGS="-arch x86_64" python -m pip install -r requirements_venv.txt
+ARCHFLAGS="-arch x86_64" python3 -m pip install -r requirements_venv.txt
 ```
 
 #### 停用您的 Python 虛擬環境
