@@ -12,12 +12,14 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.document_loaders import PyPDFLoader
 from langchain.embeddings import (HuggingFaceHubEmbeddings,
                                   HuggingFaceInstructEmbeddings)
+from typing import Literal, Optional, Any
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS, Chroma
 from PIL import Image
-
+from sentence_transformers import SentenceTransformer
 from langChainInterface import LangChainInterface
-
+from langchain.embeddings import HuggingFaceEmbeddings
+import numpy as np
 # Most GENAI logs are at Debug level.
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "DEBUG"))
 
@@ -91,7 +93,8 @@ def read_pdf(uploaded_files,chunk_size =250,chunk_overlap=20):
 
 @st.cache_data
 def read_push_embeddings():
-    embeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    
+    embeddings = HuggingFaceEmbeddings(model_name="paraphrase-multilingual-MiniLM-L12-v2")
     if os.path.exists("db.pickle"):
         with open("db.pickle",'rb') as file_name:
             db = pickle.load(file_name)
