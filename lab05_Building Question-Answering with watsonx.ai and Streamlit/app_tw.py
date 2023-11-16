@@ -3,8 +3,7 @@ from dotenv import load_dotenv
 # Import IBMGen Library 
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 from langchain.llms.base import LLM
-# Import lang Chain Interface object
-from langChainInterface import LangChainInterface
+from ibm_watson_machine_learning.foundation_models import Model
 # Import langchain prompt templates
 from langchain.prompts import PromptTemplate
 # Import system libraries
@@ -30,9 +29,6 @@ api_key = os.getenv("API_KEY", None)
 ibm_cloud_url = os.getenv("IBM_CLOUD_URL", None)
 project_id = os.getenv("PROJECT_ID", None)
 
-#bam credentials
-bam_api_key = os.getenv("bam_api_key", None)
-bam_api_url = os.getenv("bam_api_url", None)
 
 
 if api_key is None or ibm_cloud_url is None or project_id is None:
@@ -65,7 +61,11 @@ models = {
     "llama2": "meta-llama/llama-2-70b-chat"
 }
 # define LangChainInterface model
-llm = LangChainInterface(model=models["llama2"], credentials=creds, params=params, project_id=project_id)
+model = Model(
+    model_id=models["llama2"],
+    credentials=creds,
+    project_id=project_id)
+llm = model.to_langchain()
 
 # Title for the app
 st.title('🤖 Our First Q&A Front End')

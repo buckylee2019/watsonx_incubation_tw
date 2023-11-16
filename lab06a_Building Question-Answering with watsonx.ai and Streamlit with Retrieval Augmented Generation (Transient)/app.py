@@ -5,6 +5,7 @@ import tempfile
 
 import streamlit as st
 from dotenv import load_dotenv
+from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 from ibm_watson_machine_learning.foundation_models.utils.enums import ModelTypes
 from langchain.callbacks import StdOutCallbackHandler
@@ -17,7 +18,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS, Chroma
 from PIL import Image
 from sentence_transformers import SentenceTransformer
-from langChainInterface import LangChainInterface
+
 from langchain.embeddings import HuggingFaceEmbeddings
 import numpy as np
 # Most GENAI logs are at Debug level.
@@ -121,8 +122,8 @@ if user_question := st.text_input(
         # GenParams.TOP_P: 1,
         GenParams.REPETITION_PENALTY: 1
     }
-    model_llm = LangChainInterface(model=ModelTypes.LLAMA_2_70B_CHAT.value, credentials=creds, params=params, project_id=project_id)
-    chain = load_qa_chain(model_llm, chain_type="stuff")
+    model_llm = Model(model_id=ModelTypes.LLAMA_2_70B_CHAT.value, credentials=creds, params=params, project_id=project_id)
+    chain = load_qa_chain(model_llm.to_langchain(), chain_type="stuff")
 
     response = chain.run(input_documents=docs, question=user_question)
 
