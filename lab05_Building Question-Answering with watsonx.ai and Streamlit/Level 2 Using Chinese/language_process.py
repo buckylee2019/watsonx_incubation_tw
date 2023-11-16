@@ -6,43 +6,43 @@ from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 
 financial_word_list_CN2EN = """
-CN: 金钱买不来幸福。 但它可以让生活变得更加舒适。
+ZH_TW: 金钱买不来幸福。 但它可以让生活变得更加舒适。
 EN: Money can't buy happiness, but it can make life more comfortable.
 """
 
 financial_word_list_EN2CN = """
 EN: Money can't buy happiness, but it can make life more comfortable.
-CN: 金钱买不来幸福。 但它可以让生活变得更加舒适。
+ZH_TW: 金錢買不來幸福。但它可以讓生活變得更舒適。
 EN: Saving money for the future is a wise financial decision.
-CN: 为未来存钱是明智的财务决定
+ZH_TW: 為未來存錢是明智的財務決定
 EN: He lost all his money in a high-stakes poker game.
-CN: 他在一场高风险的扑克游戏中输掉了所有的钱。
+ZH_TW: 他在一場高風險的撲克遊戲中輸掉了所有的錢。
 EN: Investing in stocks can be a way to grow your wealth.
-CN: 投资股票可以成为增加财富的一种方式。
+ZH_TW: 投資股票可以是增加財富的一種方式。
 EN: She's been working hard to improve her financial situation.
-CN: 她一直在努力改善自己的财务状况。
+ZH_TW: 她一直在努力改善自己的財務狀況。
 EN: The cost of living in the city is quite high.
-CN: 城市的生活成本相当高。
+ZH_TW: 城市的生活成本相當高。
 EN: My monthly salary is deposited directly into my bank account.
-CN: 我的每月工资直接存入我的银行账户。
+ZH_TW: 我的每月薪資直接存入我的銀行帳戶。
 EN: He's been struggling with credit card debt for years.
-CN: 多年来，他一直在与信用卡债务作斗争。
+ZH_TW: 多年來，他一直在與信用卡債務作鬥爭。
 EN: They are planning for their retirement savings.
-CN: 他们正在规划自己的退休储蓄。
+ZH_TW: 他們正在規劃自己的退休儲蓄。
 EN: Financial literacy is essential for making informed money decisions.
-CN: 金融知识对于做出明智的财务决策至关重要。
+ZH_TW: 金融知識對於做出明智的財務決策至關重要。
 EN: You have money for emergencies
-CN: 你有钱应付紧急情况
+ZH_TW: 你有錢應付緊急狀況
 EN: ten percent
-CN: 百分之十
+ZH_TW: 百分之十
 EN: 10%
-CN: 百分之十
+ZH_TW: 百分之十
 EN: yes
-CN: 是的
+ZH_TW: 是的
 EN: no
-CN: 不是
+ZH_TW: 不是
 EN: The World Bank is located in Washington D.C.
-CN: 世界银行位于华盛顿特区
+ZH_TW: 世界銀行位於華盛頓特區
 """
 
 def send_to_watsonxai(prompts,
@@ -123,7 +123,7 @@ def preprocessEN2CN(translator_gen):
         if 'CN' in s:
             sentence = s
             break
-    result = sentence.split('CN:')[-1]
+    result = sentence.split('ZH_TW:')[-1]
     return result
 
 
@@ -165,17 +165,17 @@ def llm_translator_prompt(financial_word_list, sentence, mode='EN2CN'):
             {financial_word_list}
         INPUT:
             EN: {sentence} ,
-            CN:
+            ZH_TW:
         """
     else:
         prompt = f"""
         INSTRUCTION: 
-            帮忙把英语翻译成简体中文 使用示例中的格式
+            幫忙把英文翻譯成繁體中文 使用範例中的格式
             Translate the word into English language. Start the sentence by the translated EN.
         EXAMPLE: 
             {financial_word_list}
         INPUT:
-            CN: {sentence} ,
+            ZH_TW: {sentence} ,
             EN:
         """
 
@@ -200,13 +200,12 @@ def question_prompt(sentence):
     prompt = f'''
 <s>[INST] <<SYS>>
 INSTRUCTION:
-你是一位金融专家。 并用中文简短回答
+你是一位金融專家。並用中文簡短回答
 Please answer in Chinese, you are the financial advisor. Answer in short and brief.
 Produce the answer using the steps as below.
         Step 1: Understand the QUESTION.
         Step 2: WRITE the brief and easy ENGLISH answer.
         Step 3: Translate the brief and easy ENGLISH answer into Chinese language.
-        Step 4: Rewrite Step 4 into Chinese simple Answer for kid in Chinese language.
 AVOID the new line as much as possible.
 Start your response with 'Sure, I can answer in Chinese. Here's my response:'
 <</SYS>>
@@ -214,8 +213,7 @@ INPUT:
 QUESTION: {sentence}
 Step 1: Understand QUESTION: 
 Step 2: ENGLISH BRIEF ANSWER:
-Step 3: CHINESE TRANSLATED ANSWER:
-Step 5: REWRITE INTO SIMPLE CHINESE ANSWER: 
+Step 3: TRADITIONAL CHINESE TRANSLATED ANSWER:
 [/INST]
     '''
     return prompt
