@@ -1,12 +1,12 @@
 {
-  "name": "Demo Bot-action",
+  "name": "Incubation demo-action",
   "type": "action",
   "valid": true,
   "status": "Available",
-  "created": "2023-11-15T04:20:25.501Z",
-  "updated": "2023-11-15T05:33:30.562Z",
+  "created": "2023-11-16T09:44:33.875Z",
+  "updated": "2023-11-16T10:15:01.518Z",
   "language": "zh-tw",
-  "skill_id": "1b8aed38-a722-44e2-acb3-e54c9d0ebad9",
+  "skill_id": "251c3240-c2c8-419b-9e62-4751541a6276",
   "workspace": {
     "actions": [
       {
@@ -62,13 +62,13 @@
               "variables": [
                 {
                   "value": {
-                    "scalar": "[INST]<<SYS>>\\nYou're a helpful assistant, always answer question in fun way. You should answer the following question in Traditional Chinese. For example: Answer the question: 美國總統是誰？ Answer: 喬拜登。<</SYS>>Answer the question:"
+                    "scalar": "[INST]<<SYS>>\\nYou're a helpful assistant, always answer question in fun way. You should answer the following question in Traditional Chinese. For example:  \\nQuestion: 紐約的綽號是什麼？ \\n Traditional Chinese Answer: 大蘋果。\\nQuestion: 人生的意義是什麼？\\n Traditional Chinese Answer: 人生的意義是一個深遠且主觀的問題，因為每個人對於生命的看法和價值觀都可能有所不同。\\n<</SYS>>\\nQuestion:"
                   },
                   "skill_variable": "prompt_prefix"
                 },
                 {
                   "value": {
-                    "expression": "${prompt_prefix}.concat( ${step_380}).concat(\" Answer:  [/INST]\\n\")"
+                    "expression": "${prompt_prefix}.concat( ${step_380}).concat(\"\\nTraditional Chinese Answer: [/INST]\\n\")"
                   },
                   "skill_variable": "model_input"
                 }
@@ -95,7 +95,7 @@
                 "method": "POST",
                 "internal": {
                   "spec_hash_id": "cc50493e455de183d661b95360196ddb468a02051add6dcaf4a6479b34900be5",
-                  "catalog_item_id": "0f128d9f-327d-4ee6-9944-c6148f8f1e49"
+                  "catalog_item_id": "7f61425c-6cbe-4f2f-9b11-cde6aa962b40"
                 },
                 "request_mapping": {
                   "body": [
@@ -954,10 +954,7 @@
         },
         "variable": "watsonx_project_id",
         "data_type": "any",
-        "description": "",
-        "initial_value": {
-          "scalar": "3543304f-de31-4458-8f2a-a31ceac23f79"
-        }
+        "description": ""
       }
     ],
     "data_types": [],
@@ -1088,8 +1085,8 @@
     "learning_opt_out": false
   },
   "description": "created for assistant 898c4183-dbfe-41f8-a56a-69ab2893bb59",
-  "assistant_id": "898c4183-dbfe-41f8-a56a-69ab2893bb59",
-  "workspace_id": "1b8aed38-a722-44e2-acb3-e54c9d0ebad9",
+  "assistant_id": "fd8fd0ee-7f2f-4453-9931-f5755d1e13fb",
+  "workspace_id": "251c3240-c2c8-419b-9e62-4751541a6276",
   "dialog_settings": {},
   "next_snapshot_version": "1"
 }
